@@ -30,11 +30,28 @@ body {
   .text-balance {
     text-wrap: balance;
   }
-}
 
-.bgImage {
-  background-image: url('/IMG_7358.JPG');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
+  .neg-ml-1 {
+    margin-left: -1rem;
+  }
+  
+  .neg-ml-4 {
+    margin-left: -4rem;
+  }
+
+  .neg-ml-6 {
+    margin-left: -6rem;
+  }
+
+  .neg-ml-7 {
+    margin-left: -7rem;
+  }
+  
+  .neg-ml-8 {
+    margin-left: -8rem;
+  }
+  
+  .neg-ml-9 {
+    margin-left: -9rem;
+  }
 }
