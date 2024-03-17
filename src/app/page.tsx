@@ -58,6 +58,9 @@ export default function Home() {
       <p className="text-sm my-2">
         And have led and mentored teams to achieve project goals while significantly contributing to strategic application architecture decisions
       </p>
+      <p className="text-sm my-10">
+        Thanks for stopping by!
+      </p>
       <div className="hidden md:block my-10">
         <a href="mailto:jaytee.sanchez@gmail.com?subject=Hello! I came across your site" className=" text-white bg-[#050708] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2 hover:motion-safe:animate-bounce" type="button" aria-label="Email me">
           <MdOutlineEmail/>

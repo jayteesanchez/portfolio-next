@@ -28,7 +28,7 @@ export default function RootLayout({
               }}>
             <div className="w-full 2xl:w-1/4 xl:w-2/5 lg:w-1/2 md:w-7/12 h-dvh lg:px10 px-0 mx-auto flex flex-col">
               <Navbar />
-              <div className="mt-0 xl:mt-68 md:mt-40 md:px-0 px-5">
+              <div className="">
                 {children}
               </div>
               <Socials />
