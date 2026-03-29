@@ -3,30 +3,31 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --foreground-rgb: 255, 255, 255;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+html,
+body {
+  background-color: #000;
+  color: rgb(var(--foreground-rgb));
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
 @layer utilities {
+  .animate-fade-in-up {
+    animation: fadeInUp 0.5s ease-out forwards;
+  }
+
   .text-balance {
     text-wrap: balance;
   }
@@ -34,7 +35,7 @@ body {
   .neg-ml-1 {
     margin-left: -1rem;
   }
-  
+
   .neg-ml-4 {
     margin-left: -4rem;
   }
@@ -46,11 +47,11 @@ body {
   .neg-ml-7 {
     margin-left: -7rem;
   }
-  
+
   .neg-ml-8 {
     margin-left: -8rem;
   }
-  
+
   .neg-ml-9 {
     margin-left: -9rem;
   }

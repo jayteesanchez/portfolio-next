@@ -8,18 +8,9 @@ import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const links = [
-    {
-      id: 1,
-      link: '/'
-    },
-    {
-      id: 2,
-      link: 'projects'
-    },
-    {
-      id: 3,
-      link: 'resume'
-    },
+    { id: 1, href: "/", label: "home" },
+    { id: 2, href: "/projects/", label: "projects" },
+    { id: 3, href: "/resume/", label: "resume" },
   ];
   const path = usePathname();
 
@@ -32,8 +23,8 @@ const Navbar = () => {
         <li
           className="flex items-center font-sans text-sm antialiased font-normal leading-normal transition-colors duration-300 cursor-pointer text-blue-gray-900 hover:text-light-blue-500">
           <Link
-            href={links[0].link}
-            className={`scale-125 hover:scale-150 duration-300 delay-300 ${path.includes(links[0].link) ? 'scale-150' : ''}`}>
+            href={links[0].href}
+            className={`scale-125 hover:scale-150 duration-300 delay-300 ${path === "/" || path === "" ? 'scale-150' : ''}`}>
             <RiHomeOfficeFill/>
           </Link>
           <span className="mx-2 font-sans text-sm antialiased font-normal leading-normal pointer-events-none select-none text-blue-gray-500"> / </span>
@@ -41,18 +32,18 @@ const Navbar = () => {
         <li
           className="flex items-center font-sans text-sm antialiased font-normal leading-normal transition-colors duration-300 cursor-pointer text-blue-gray-900 hover:text-light-blue-500">
           <Link
-            href={links[1].link}
-            className={`${defLinkStyle} ${path.includes(links[1].link) ? activeLinkStyle : ''}`}>
-            {links[1].link}
+            href={links[1].href}
+            className={`${defLinkStyle} ${path.startsWith("/projects") ? activeLinkStyle : ''}`}>
+            {links[1].label}
           </Link>
           <span className="mx-2 font-sans text-sm antialiased font-normal leading-normal pointer-events-none select-none text-blue-gray-500"> / </span>
         </li>
         <li
           className="flex items-center font-sans text-sm antialiased font-normal leading-normal transition-colors duration-300 cursor-pointer text-blue-gray-900 hover:text-light-blue-500">
           <Link
-            href={links[2].link}
-            className={`${defLinkStyle} ${path.includes(links[2].link)  ? activeLinkStyle : ''}`}>
-            {links[2].link}
+            href={links[2].href}
+            className={`${defLinkStyle} ${path.startsWith("/resume") ? activeLinkStyle : ''}`}>
+            {links[2].label}
           </Link>
         </li>
       </ol>
