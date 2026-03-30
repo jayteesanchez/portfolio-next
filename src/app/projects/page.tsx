@@ -3,6 +3,15 @@ import { FiExternalLink } from "react-icons/fi";
 
 const projects = [
   {
+    name: "jayteesanchez.com",
+    description: "This portfolio site — statically exported Next.js with a serverless resume access flow.",
+    tech: ["Next.js", "TypeScript", "AWS S3", "CloudFront", "Lambda", "SES", "Tailwind CSS"],
+    href: "https://github.com/jayteesanchez/portfolio-next",
+    image: "/githubrepo.png",
+    accent: "border-t-orange-500",
+    badgeColor: "bg-orange-500/10 text-orange-300 border-orange-500/20",
+  },
+  {
     name: "We Got Us Today",
     description:
       "Platform to celebrate graduating students during the Covid pandemic.",
