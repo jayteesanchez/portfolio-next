@@ -34,3 +34,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+
+# lambda
+lambda/resume-access/dist
+lambda/resume-access/resume-access.zip
+lambda/resume-access/node_modules
