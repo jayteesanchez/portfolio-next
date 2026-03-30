@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# jayteesanchez.com
 
-## Getting Started
+Personal portfolio site built with Next.js 14, statically exported for S3/CloudFront deployment.
 
-First, run the development server:
+## Commands
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev      # Start dev server at localhost:3000
+npm run build    # Build for production (outputs to out/)
+npm run lint     # Run ESLint
+npm run start    # Run production server
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Architecture
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Next.js 14 App Router**, statically exported (`output: "export"` in `next.config.mjs`). The build produces an `out/` directory. Trailing slashes are enabled for S3-compatible routing.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Pages
 
-## Learn More
+Three routes, all under `src/app/`:
+- `/` — Home with tech stack icon grid
+- `/projects` — Project cards with screenshots, tech badges, and external links
+- `/resume` — Email gate form; on submission calls a Lambda that returns a pre-signed S3 URL, then renders the PDF inline (desktop) or a download button (mobile)
 
-To learn more about Next.js, take a look at the following resources:
+The root `layout.tsx` wraps all pages with a full-viewport dark layout: a background photo with a left-to-right gradient overlay, a top-left navbar, and bottom-left social links. Content is constrained to roughly the left third on large screens.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Components
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- `navbar.tsx` — `'use client'`; breadcrumb nav using `usePathname()` for active-link styling
+- `socials.tsx` — Server component; LinkedIn, GitHub, email icon links
+- `pdfViewer.tsx` — `'use client'`; wraps `react-pdf` with a custom pdfjs worker; scales pages to container width via `ResizeObserver`; renders all pages
+- `emailGateForm.tsx` — `'use client'`; email input form that POSTs to `NEXT_PUBLIC_RESUME_LAMBDA_URL` and returns a signed URL on success
 
-## Deploy on Vercel
+### Resume Lambda
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Lives in `lambda/resume-access/`. Validates submitted email, sends an SES notification, and returns a short-lived pre-signed S3 URL for the resume PDF stored in a private bucket.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```bash
+cd lambda/resume-access
+npm install
+npm run zip   # builds and zips for Lambda upload
+```
+
+Required Lambda env vars: `RESUME_BUCKET`, `RESUME_KEY`, `NOTIFY_EMAIL`, `ALLOWED_ORIGINS` (comma-separated), `URL_EXPIRY_SECONDS`, `SES_REGION`.
+
+### Styling
+
+Tailwind CSS only — no CSS modules or styled-components. Custom utilities in `tailwind.config.ts`: extra scale values (175, 200, 250) for icon hover effects, and `80svh` height. Custom `animate-fade-in-up` animation in `globals.css`.
+
+### Content
+
+All content is hardcoded. Project data lives directly in `src/app/projects/page.tsx`. The resume PDF lives in a private S3 bucket (not `/public`).
+
+### Webpack note
+
+`next.config.mjs` aliases away `canvas` from `pdfjs-dist` to prevent a Node.js build error during static export.
+
+## Deployment
+
+Full AWS deployment guide (S3 + CloudFront, domain setup, deploy script) is in `~/.claude/projects/-Users-jaytee-Documents-code-portfolio-next/memory/AWS_DEPLOYMENT.md`.
